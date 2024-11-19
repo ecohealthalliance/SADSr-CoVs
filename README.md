@@ -1,6 +1,8 @@
 # SADSr-CoVs
 Code to perform species distribution modeling for Latinne et al. "Diversity and spillover risk of Swine Acute Diarrhea Syndrome and related coronaviruses in China and Southeast Asia"
 
+[![DOI](https://zenodo.org/badge/891018976.svg)](https://doi.org/10.5281/zenodo.14188368)
+
 *Explanation of code organization:*
 The `main_run.R` script performs the species distribution modeling described in 
 the manuscript. It begins by loading packages (you will need to install them if 
