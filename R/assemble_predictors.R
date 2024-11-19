@@ -1,6 +1,7 @@
 #' assemble set of cropped, masked predictor variables
-#' for more info about downloading data (especially the large files), 
-#' see "raw_data/data_sources.R"
+#' note that not all predictor data could be uploaded to Github, due to size or
+#' restrictions on their use. for more info about downloading these data layers 
+#' directly from their sources, see "raw_data/data_sources.R"
 #' 
 #' @title assemble_predictors
 #' @returns 
