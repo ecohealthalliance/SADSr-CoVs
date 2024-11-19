@@ -1,0 +1,12 @@
+variable,percent.contribution,permutation.importance
+perc_decid_brdlf_forests,27.4001,43.0338
+perc_evgrn_brdlf_forests,43.5082,17.1283
+bio1,8.2121,15.1035
+dist_karst,2.983,14.4834
+ntl,3.1891,7.2936
+bio12,11.1736,1.2301
+bio15,2.7466,1.0275
+perc_mxd_forests,0.7873,0.6998
+perc_evgrn_ndlf_forests,0,0
+perc_water_bodies,0,0
+pop_dens,0,0
