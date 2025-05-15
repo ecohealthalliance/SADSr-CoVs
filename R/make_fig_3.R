@@ -102,8 +102,8 @@ make_fig_3 <- function(threshold){
          title = expression(atop("Pig density", "(per sq. km)")))
   plot(countries, add = TRUE, col = "gray95", border = "gray70", fill = TRUE)
   mtext("A", side = 3, line = 1, cex = 1.5, adj = -0.15)
-  mtext("Longitude", side = 1, line = 1.5)
-  mtext("Latitude", side = 2, line = 1)
+  mtext("Longitude", side = 1, line = 3.5)
+  mtext("Latitude", side = 2, line = 3)
   plot(joint_pigs_binned, col = myColors, xlab = "", ylab = "",  
        legend = FALSE, add = TRUE)
   
@@ -116,8 +116,8 @@ make_fig_3 <- function(threshold){
          title = expression(atop("Human density", "(per sq. km)")))
   plot(countries, add = TRUE, col = "gray95", border = "gray70", fill = TRUE)
   mtext("B", side = 3, line = 1, cex = 1.5, adj = -0.15)
-  mtext("Longitude", side = 1, line = 1.5)
-  mtext("Latitude", side = 2, line = 1)
+  mtext("Longitude", side = 1, line = 3.5)
+  mtext("Latitude", side = 2, line = 3)
   plot(joint_humans_binned, col = myColors, xlab = "", ylab = "", 
        legend = FALSE, add = TRUE)
   
