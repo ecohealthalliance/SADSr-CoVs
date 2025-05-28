@@ -32,7 +32,7 @@ make_fig_4 <- function(threshold){
   pigs <- terra::rast("data_raw/GLW4/5_Pg_2015_Da.tif")
   
   # crop for easier manipulation
-  pigs_cropped <- terra::crop(pigs, ext(bat_mosaic))
+  pigs_cropped <- terra::crop(pigs, terra::ext(bat_mosaic))
   
   # resample the bat raster to the resolution of the pig raster
   bats_resampled <- raster::resample(bat_mosaic, pigs_cropped, method = "near")
@@ -75,21 +75,56 @@ make_fig_4 <- function(threshold){
     dplyr::mutate(pigs_binned = NA)
   
   # make the map
+  # ggplot() +
+  #   geom_sf(china_sf, mapping = aes(fill = pigs_binned), col = "gray20") +
+  #   geom_sf(taiwan_sf, mapping = aes(fill = pigs_binned), col = "gray20") +
+  #   scale_fill_viridis_d(name = "Pig population at risk\n(millions)", 
+  #                        na.value = "gray70", direction = -1, 
+  #                        begin = 0.15, end = 1) +
+  #   labs(x = "Longitude", y = "Latitude") +
+  #   geom_label_repel(data = centroids_sf, 
+  #                    mapping = aes(label = prov_lab, geometry = geometry),
+  #                    stat = "sf_coordinates",
+  #                    size = 4, color = "black", alpha = 0.8,
+  #                    segment.colour = "gray40", segment.size = 1, force = 5,
+  #                    min.segment.length = 0, show.legend = FALSE) +
+  #   theme_bw() +
+  #   theme(legend.position = c(0.12, 0.8),
+  #         legend.background = element_rect(fill = "transparent", color = NA),
+  #         axis.text = element_text(color = "black")) -> f4a
+  
+  # new version of map 
+  # plots the old map (to be able to use the same legend), 
+  # then plots over it with a different map of China using the ggmapcn package
   ggplot() +
     geom_sf(china_sf, mapping = aes(fill = pigs_binned), col = "gray20") +
-    geom_sf(taiwan_sf, mapping = aes(fill = pigs_binned), col = "gray20") +
-    scale_fill_viridis_d(name = "Pig population at risk\n(millions)", 
-                         na.value = "gray70", direction = -1, 
+    geom_mapcn(fill = "gray70") +
+    # fill is hard-coded because map data couldn't be accessed directly
+    geom_mapcn(filter_attribute = "name_en", 
+               filter = c("Zhejiang", "Hainan", "Hubei", "Guangxi", 
+                          "Jiangsu", "Xizang", "Chongqing", "Fujian", 
+                          "Guangdong", "Shanghai", "Jiangxi", "Yunnan", 
+                          "Sichuan", "Anhui", "Hunan", "Shaanxi", 
+                          "Guizhou"),
+               fill = c("#2E6F8EFF", "#463480FF", "#1FA287FF", "#FDE725FF", 
+                        "#463480FF", "#463480FF", "#1FA287FF", "#1FA287FF", 
+                        "#FDE725FF", "#463480FF", "#72D056FF", "#1FA287FF",
+                        "#2E6F8EFF", "#463480FF", "#FDE725FF", "#463480FF", 
+                        "#1FA287FF")) +
+    scale_fill_viridis_d(name = "Pig population at risk\n(millions)",
+                         na.value = "gray70", direction = -1,
                          begin = 0.15, end = 1) +
     labs(x = "Longitude", y = "Latitude") +
-    geom_label_repel(data = centroids_sf, 
+    geom_label_repel(data = centroids_sf %>% 
+                       dplyr::filter(!prov_lab == "Hong Kong"), 
                      mapping = aes(label = prov_lab, geometry = geometry),
                      stat = "sf_coordinates",
                      size = 4, color = "black", alpha = 0.8,
                      segment.colour = "gray40", segment.size = 1, force = 5,
                      min.segment.length = 0, show.legend = FALSE) +
     theme_bw() +
-    theme(legend.position = c(0.12, 0.8),
+    theme(legend.position = "inside",
+          legend.position.inside = c(0.2, 0.2),
           legend.background = element_rect(fill = "transparent", color = NA),
           axis.text = element_text(color = "black")) -> f4a
   
@@ -139,21 +174,56 @@ make_fig_4 <- function(threshold){
     dplyr::mutate(humans_binned = NA)
   
   # make the map
+  # ggplot() +
+  #   geom_sf(china_sf, mapping = aes(fill = humans_binned), col = "gray20") +
+  #   geom_sf(taiwan_sf, mapping = aes(fill = humans_binned), col = "gray20") +
+  #   scale_fill_viridis_d(name = "Human population at risk\n(millions)", 
+  #                        na.value = "gray70", direction = -1, 
+  #                        begin = 0.15, end = 1) +
+  #   labs(x = "Longitude", y = "Latitude") +
+  #   geom_label_repel(data = centroids_sf, 
+  #                    mapping = aes(label = prov_lab, geometry = geometry),
+  #                    stat = "sf_coordinates",
+  #                    size = 4, color = "black", alpha = 0.8,
+  #                    segment.colour = "gray40", segment.size = 1, force = 5,
+  #                    min.segment.length = 0, show.legend = FALSE) +
+  #   theme_bw() +
+  #   theme(legend.position = c(0.13, 0.8),
+  #         legend.background = element_rect(fill = "transparent", color = NA),
+  #         axis.text = element_text(color = "black")) -> f4b
+  
+  # new version of map 
+  # plots the old map (to be able to use the same legend), 
+  # then plots over it with a different map of China using the ggmapcn package
   ggplot() +
     geom_sf(china_sf, mapping = aes(fill = humans_binned), col = "gray20") +
-    geom_sf(taiwan_sf, mapping = aes(fill = humans_binned), col = "gray20") +
-    scale_fill_viridis_d(name = "Human population at risk\n(millions)", 
-                         na.value = "gray70", direction = -1, 
+    geom_mapcn(fill = "gray70") +
+    # fill is hard-coded because map data couldn't be accessed directly
+    geom_mapcn(filter_attribute = "name_en", 
+               filter = c("Zhejiang", "Hainan", "Hubei", "Guangxi", 
+                          "Jiangsu", "Xizang", "Chongqing", "Fujian", 
+                          "Guangdong", "Shanghai", "Jiangxi", "Yunnan", 
+                          "Sichuan", "Anhui", "Hunan", "Shaanxi", 
+                          "Guizhou"),
+               fill = c("#FDE725FF", "#463480FF", "#2E6F8EFF", "#72D056FF", 
+                        "#1FA287FF", "#463480FF", "#2E6F8EFF", "#1FA287FF", 
+                        "#FDE725FF", "#2E6F8EFF", "#72D056FF", "#2E6F8EFF",
+                        "#2E6F8EFF", "#463480FF", "#FDE725FF", "#463480FF", 
+                        "#1FA287FF")) +
+    scale_fill_viridis_d(name = "Human population at risk\n(millions)",
+                         na.value = "gray70", direction = -1,
                          begin = 0.15, end = 1) +
     labs(x = "Longitude", y = "Latitude") +
-    geom_label_repel(data = centroids_sf, 
+    geom_label_repel(data = centroids_sf %>% 
+                       dplyr::filter(!prov_lab == "Hong Kong"), 
                      mapping = aes(label = prov_lab, geometry = geometry),
                      stat = "sf_coordinates",
                      size = 4, color = "black", alpha = 0.8,
                      segment.colour = "gray40", segment.size = 1, force = 5,
                      min.segment.length = 0, show.legend = FALSE) +
     theme_bw() +
-    theme(legend.position = c(0.13, 0.8),
+    theme(legend.position = "inside",
+          legend.position.inside = c(0.2, 0.2),
           legend.background = element_rect(fill = "transparent", color = NA),
           axis.text = element_text(color = "black")) -> f4b
   
